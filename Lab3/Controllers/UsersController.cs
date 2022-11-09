@@ -39,6 +39,7 @@ namespace Lab3.Controllers
         [Route("/UpdateUser")]
         public IActionResult UpdateUser(int oldId,User newUser)
         {
+            if (newUser.Id != oldId && _memory.Users.Find(x => x.Id == newUser.Id) != null) return Forbid();
             var userIndex = _memory.Users.FindIndex(x => x.Id == oldId);
             if (userIndex < 0) return NotFound();
             _memory.Users[userIndex] = newUser;
